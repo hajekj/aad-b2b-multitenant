@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Graph Sample";
+    var users = (List<Microsoft.Graph.User>)ViewData["Users"];
+}
+<h2>/users</h2>
+<ul>
+    @foreach (var user in users)
+    {
+        <li>@user.DisplayName | @user.UserPrincipalName | @user.Id</li>
+    }
+</ul>

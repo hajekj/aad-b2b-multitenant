@@ -1,0 +1,17 @@
+﻿@using WebApplication1.Models;
+@{
+    ViewData["Title"] = "Tenant Selection";
+    TenantsList tenants = (TenantsList)ViewData["TenantsList"];
+    TenantsListTenant currentTenant = @tenants.Tenants.Where(x => x.IsSignedInTenant == true).FirstOrDefault();
+}
+
+<h2>Your available tenants</h2>
+<ul>
+    @foreach (var tenant in tenants.Tenants)
+    {
+        <li><a asp-area="" asp-controller="Home" asp-action="TenantSelect" asp-route-id="@tenant.Id"><b>@tenant.DisplayName</b></a> (@tenant.Id, @tenant.DomainName, Current: @tenant.IsSignedInTenant)</li>
+    }
+</ul>
+<h2>Your current tenant</h2>
+<p>Authentication Ticket says: <b>@Context.User.FindFirst(AzureAdClaimTypes.TenantId)?.Value</b></p>
+<p>TenantsList says: <b>@currentTenant.Id</b> (@currentTenant.DisplayName)</p>
