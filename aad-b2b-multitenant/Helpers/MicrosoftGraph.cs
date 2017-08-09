@@ -23,7 +23,7 @@ namespace WebApplication1.Helpers
             _httpContextAccessor = httpContextAccessor;
             _userObjectId = _httpContextAccessor.HttpContext.User.FindFirst(AzureAdClaimTypes.ObjectId)?.Value;
             _tenantId = _httpContextAccessor.HttpContext.User.FindFirst(AzureAdClaimTypes.TenantId)?.Value;
-            _authContext = new AuthenticationContext("https://login.microsoftonline.com/common", new NaiveSessionCache(_tenantId, _httpContextAccessor.HttpContext.Session));
+            _authContext = new AuthenticationContext($"https://login.microsoftonline.com/{_tenantId}", new NaiveSessionCache(_tenantId, _httpContextAccessor.HttpContext.Session));
             _clientCredential = new ClientCredential(configuration["Authentication:AzureAd:ClientId"], configuration["Authentication:AzureAd:ClientSecret"]);
         }
         public GraphServiceClient GetClient()

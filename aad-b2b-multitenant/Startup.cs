@@ -105,7 +105,7 @@ namespace WebApplication1
                         // Either use tenant id with the token cache or clean the token cache each time user changes tenants or it will be confused
                         var tenantId = (context.Ticket.Principal.FindFirst(AzureAdClaimTypes.TenantId))?.Value;
                         var clientCred = new ClientCredential(context.Options.ClientId, context.Options.ClientSecret);
-                        var authContext = new AuthenticationContext(context.Options.Authority, new NaiveSessionCache(tenantId, context.HttpContext.Session));
+                        var authContext = new AuthenticationContext(context.Options.Authority.Replace("common", $"{tenantId}/"), new NaiveSessionCache(tenantId, context.HttpContext.Session));
                         var authResult = await authContext.AcquireTokenByAuthorizationCodeAsync(context.ProtocolMessage.Code, new Uri(context.Properties.Items[OpenIdConnectDefaults.RedirectUriForCodePropertiesKey]), clientCred, "https://graph.microsoft.com");
                         context.HandleCodeRedemption(authResult.AccessToken, authResult.IdToken);
                     },
