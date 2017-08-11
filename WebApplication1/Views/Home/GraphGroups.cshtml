@@ -1,0 +1,12 @@
+﻿@using WebApplication1.ViewModels
+@model IList<GroupDTO>
+@{
+    ViewData["Title"] = "Graph Groups";
+}
+<h2>Member Groups</h2>
+<ul>
+    @foreach (var group in Model)
+    {
+        <li>@group.Name | <a href="@group.SharePointUrl">SharePoint</a></li>
+    }
+</ul>

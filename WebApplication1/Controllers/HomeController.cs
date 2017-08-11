@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http.Features.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph;
 using WebApplication1.Helpers;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
@@ -59,6 +60,24 @@ namespace WebApplication1.Controllers
             ViewData["Users"] = (await _graph.GetClient().Users.Request().GetAsync()).CurrentPage.ToList();
 
             return View();
+        }
+        public async Task<IActionResult> GraphGroups()
+        {
+            var graphClient = _graph.GetClient();
+            List<GroupDTO> groups = new List<GroupDTO>();
+
+            var currentGroups = (await graphClient.Me.MemberOf.Request().GetAsync()).CurrentPage.OfType<Group>().Where(x => x.GroupTypes.Contains("Unified"));
+
+            foreach(var currentGroup in currentGroups)
+            {
+                GroupDTO group = new GroupDTO();
+                group.Name = currentGroup.DisplayName;
+                var site = (await graphClient.Groups[currentGroup.Id].Sites["root"].Request().GetAsync());
+                group.SharePointUrl = site.WebUrl;
+                groups.Add(group);
+            }
+
+            return View(groups);
         }
         [AllowAnonymous]
         public IActionResult Error()
