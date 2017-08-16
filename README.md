@@ -1,4 +1,4 @@
-A code sample accompanying an article [Creating a multi-tenant application which supports B2B users](https://hajekj.net/371) on my [blog](https://hajekj.net).
+A code sample accompanying an article [Creating a multi-tenant application which supports B2B users](https://hajekj.net/2017/07/24/creating-a-multi-tenant-application-which-supports-b2b-users/) on my [blog](https://hajekj.net).
 
 # Setup instructions
 1. [Create an Azure AD application](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-integrating-applications#adding-an-application) in the [Portal](https://portal.azure.com).
